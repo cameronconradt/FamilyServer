@@ -1,5 +1,9 @@
 package dao;
 
+import java.net.ConnectException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.User;
@@ -32,5 +36,15 @@ public class userDao extends Dao {
             }
         }
         return null;
+    }
+    public static void replaceModel(User model){
+        try {
+            sqlCommand(new String("update users set " + model.getData() + " where id='" + model.getId() + "'"));
+            System.out.println("Successfully replaced user");
+            //update users set *** data *** where id='user_id'
+        }
+        catch(SQLException e){
+            System.out.print("Could not replace user " + e.getMessage());
+        }
     }
 }

@@ -1,6 +1,9 @@
 package dao;
 
 import java.awt.Event;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.Person;
@@ -71,13 +74,14 @@ public class personDao extends Dao {
         return toReturn;
     }
 
-    public Person addEvent(String id, event event){
-        for(Person person : people){
-            if(person.getId().equals(id)){
-                person.addEvent(event);
-                return person;
-            }
+    public static void replaceModel(Person model){
+        try {
+            sqlCommand("update people set " + model.getData() + " where id='" + model.getId() + "'");
+            System.out.println("Successfully replaced Person");
+            //update users set *** data *** where id='user_id'
         }
-        return null;
+        catch(SQLException e){
+            System.out.println("Could not replace Person " + e.getMessage());
+        }
     }
 }

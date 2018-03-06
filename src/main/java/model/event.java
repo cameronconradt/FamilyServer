@@ -17,7 +17,10 @@ public class event extends Model  {
     public String getPerson_id() {
         return person_id;
     }
+    public String getData(){
+        return new String("date = " + date + ", type = " + type + ", latitude = " + Double.toString(latitude) + ", longitude = " + Double.toString(longitude) + ", country = " + country + ", city = " + city + ", person_id = " + person_id);
 
+    }
     /**
      *
      * @param data string array [date, type, country, city, person_id]
@@ -80,4 +83,6 @@ public class event extends Model  {
     public void setId(String id) {
         this.id = id;
     }
+
+
 }

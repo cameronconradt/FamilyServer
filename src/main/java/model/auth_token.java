@@ -5,18 +5,24 @@ package model;
  */
 
 public class auth_token extends Model {
-    private String token;
-    private String person_id;
+    private String id;
+    private String user_id;
 
-    public String getToken() {
-        return token;
+    public String getId() {
+        return id;
     }
 
-    public String getPerson_id() { return person_id;}
+    public String getUserId() { return user_id;}
 
     /**
      *
      * @param token Token to store
      */
-    public auth_token(String token, String person_id){this.token = token; this.person_id = person_id;}
+    public auth_token(String token, String user_id){this.token = token; this.user_id = user_id;}
+
+    public String getData(){
+        return new String("user_id = " + user_id);
+    }
+
+
 }

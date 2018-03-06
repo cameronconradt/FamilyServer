@@ -13,27 +13,8 @@ public class User extends Model  {
     private String firstName;
     private String lastName;
     private String gender;
+    private String personid;
     private String id;
-    private ArrayList<auth_token> auth_tokens;
-
-    /**
-     * generates new unique auth token
-     */
-    public void generateAuth_Token(){
-
-    }
-
-    /**
-     * Removes specific auth_token
-     * @param toRemove Token to remove
-     */
-    public void removeAuth_Token(auth_token toRemove){
-
-    }
-
-    public ArrayList<auth_token> getAuth_tokens() {
-        return auth_tokens;
-    }
 
     public String getUsername() {
         return username;
@@ -61,6 +42,10 @@ public class User extends Model  {
 
     public String getId() {
         return id;
+    }
+
+    public String getData(){
+        return new String("username = " + username + ", password = " + password + ", email = " + email + ", firstName = " + firstName + ", lastName = " + lastName + ", gender = " + gender);
     }
 
     /**

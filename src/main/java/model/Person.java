@@ -6,22 +6,13 @@ package model;
 
 public class Person extends Model  {
     private String id;
-    private User descendant;
+    private String user_id;
     private String firstName;
     private String lastName;
     private String gender;
     private String father;
     private String mother;
     private String spouse;
-    private String[] events_IDs;
-
-    public void addEvent(event toAdd){
-    }
-    public void removeEvent(event toRemove){
-    }
-    public String[] getEvents() {
-        return events_IDs;
-    }
 
     public void setFather(String father) {
         this.father = father;
@@ -43,12 +34,16 @@ public class Person extends Model  {
      */
     public Person(String[] data, User descendant){}
 
+    public String getData(){
+        return new String("user_id = " + user_id + ", firstName = " + firstName + ", lastName = " + lastName + ", gender = " + gender + ", father = " + father + ", mother = " + mother + ", spouse = " + spouse);
+    }
+
     public String getId() {
         return id;
     }
 
-    public User getDescendant() {
-        return descendant;
+    public String getDescendant() {
+        return user_id;
     }
 
     public String getFirstName() {

@@ -1,6 +1,10 @@
 package dao;
 
 import model.event;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
@@ -69,5 +73,16 @@ public class eventDao extends Dao {
         //TODO: sql integration to find all events
 
         return null;}
+
+    public static void replaceModel(event model){
+        try {
+            sqlCommand("update events set " + model.getData() + " where id='" + model.getId() + "'");
+            //update events set *** data *** where id='event_id'
+            System.out.println("Successfully replaced Event");
+        }
+        catch(SQLException e){
+            System.out.println("Could not replaced Event " + e.getMessage());
+        }
+    }
 
 }

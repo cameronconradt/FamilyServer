@@ -1,5 +1,10 @@
 package dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.auth_token;
@@ -22,7 +27,60 @@ public class auth_tokenDao extends Dao {
      */
     public void createAuth_Token(String id, String token){
         auth_token tempToken = new auth_token(token, id);
-        addModel(tempToken);
+        Connection connection = connect();
+        if(connection == null) {
+            throw new NullPointerException();
+        }
+        try {
+        PreparedStatement prep = connection.prepareStatement("insert into auth_tokens values(?, ?);");
+//		userName TEXT, password TEXT, authCode TEXT, userId INTEGER
+
+        prep.setString(1, tempToken.getId());
+        prep.setString(2, tempToken.getUserId());
+        prep.addBatch();
+
+        connection.setAutoCommit(false);
+        prep.executeBatch();
+        connection.setAutoCommit(true);
+        connection.close();
+        } catch (SQLException e) {
+            System.err.println("Couldn't close the connection!");
+            e.printStackTrace();
+        }
+
         tokens.add(tempToken);
+    }
+
+    public static void replaceModel(auth_token model){
+        try {
+            sqlCommand("update auth_tokens set " + model.getData() + " where id='" + model.getId() + "'");
+            //update users set *** data *** where id='user_id'
+            System.out.println("Successfully replaced auth_token");
+        }
+        catch(SQLException e){
+            System.out.println("Could not update auth_token " + e.getMessage());
+        }
+    }
+
+    public void getWithId(String id){
+        Connection connection = connect();
+        if(connection == null) {
+            throw new NullPointerException();
+        }
+        Statement statement;
+        ResultSet rs = null;
+        auth_token token = null;
+        try {
+            statement = connection.createStatement();
+            rs = statement.executeQuery("select * from auth_tokens where id=\""+ id + "\";");
+
+        } catch (SQLException e) {
+            System.err.println("The attempt to get the user info failed!");
+            e.printStackTrace();
+        }
+    }
+
+    public void getWithName(String username){
+
     }
 }
