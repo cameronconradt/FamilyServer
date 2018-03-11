@@ -1,6 +1,7 @@
 package dao;
 
 import model.event;
+import model.events;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -47,7 +48,7 @@ public class eventDao extends Dao {
      * @param id event ID
      * @return return event associated with the id
      */
-    public event getEvent(String id) {
+    public event getEvent(String id) throws SQLException{
         for(event event : events){
             if(event.getId().equals(id)){
                 return event;
@@ -62,7 +63,7 @@ public class eventDao extends Dao {
      * @param id Root Person ID
      * @return all events associated with root id
      */
-    public ArrayList<event> getAllEvents(String id){
+    public events getAllEvents(String id) throws SQLException{
         ArrayList<event> toReturn = new ArrayList<>();
         for(event event : events){
             if(event.getPerson_id().equals(id)){

@@ -13,20 +13,27 @@ public class event extends Model  {
     private String city;
     private String id;
     private String person_id;
+    private String user_id;
 
+
+    public String getUser_id() {return user_id;}
+    public void setUser_id(String id){user_id = id;}
     public String getPerson_id() {
         return person_id;
     }
+    public void setPerson_id(String id){person_id = id;}
     public String getData(){
         return new String("date = " + date + ", type = " + type + ", latitude = " + Double.toString(latitude) + ", longitude = " + Double.toString(longitude) + ", country = " + country + ", city = " + city + ", person_id = " + person_id);
 
     }
     /**
      *
-     * @param data string array [date, type, country, city, person_id]
+     * @param data string array [date, type, country, city, person_id,user_id]
      * @param location double array [latitude, longitude]
      */
     public event(String[] data, double[] location, String id){}
+
+    public event(User user) {}
 
     public event(String id) {}
 

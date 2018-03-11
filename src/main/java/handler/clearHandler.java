@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 
+import model.Model;
 import model.clearResult;
 import service.clearService;
 
@@ -64,7 +65,7 @@ public class clearHandler extends Handler {
             if (!good_path) {
                 ex.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR, 0);
             } else {
-                clearResult clearResult = new clearService().clear();
+                Model clearResult = new clearService().clear();
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
                 String json = gson.toJson(clearResult);

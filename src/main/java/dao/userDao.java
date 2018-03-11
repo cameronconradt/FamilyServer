@@ -37,6 +37,10 @@ public class userDao extends Dao {
         }
         return null;
     }
+
+    public User getUserByName(String username){
+
+    }
     public static void replaceModel(User model){
         try {
             sqlCommand(new String("update users set " + model.getData() + " where id='" + model.getId() + "'"));

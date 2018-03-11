@@ -12,7 +12,6 @@ import dao.Dao;
  */
 
 public class Handler implements HttpHandler {
-    protected Dao myDao = new Dao();
 
     @Override
     public void handle(HttpExchange ex) throws IOException {

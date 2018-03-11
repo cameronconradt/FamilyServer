@@ -66,7 +66,7 @@ public class personDao extends Dao {
     public ArrayList<Person> getAllPersons(String id){
         ArrayList<Person> toReturn = new ArrayList<>();
         for(Person person : people){
-            if(person.getDescendant().getId().equals(id)){
+            if(person.getUser_id().equals(id)){
                 toReturn.add(person);
             }
         }

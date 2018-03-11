@@ -62,7 +62,7 @@ public class auth_tokenDao extends Dao {
         }
     }
 
-    public void getWithId(String id){
+    public auth_token getWithId(String id) throws SQLException{
         Connection connection = connect();
         if(connection == null) {
             throw new NullPointerException();
@@ -78,9 +78,20 @@ public class auth_tokenDao extends Dao {
             System.err.println("The attempt to get the user info failed!");
             e.printStackTrace();
         }
+
+        token = new auth_token(rs.getString(1),rs.getString(2));
+
+        try{
+            connection.close();
+        }
+        catch(SQLException e){
+            System.err.print("Couldn't close connection");
+            e.printStackTrace();
+        }
+        return token;
     }
 
-    public void getWithName(String username){
+    public auth_token getWithName(String username){
 
     }
 }

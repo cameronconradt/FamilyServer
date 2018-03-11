@@ -36,7 +36,7 @@ public class Dao {
      */
         public void clear(){createTables();}
 
-        public void createTables(){
+        public static void createTables(){
             Connection connection = connect();
             Statement state = null;
             try{
@@ -58,6 +58,7 @@ public class Dao {
                         "firstName varchar(255) not null," +
                         "lastName varchar(255) not null," +
                         "gender char(1) not null," +
+                        "personid integer not null," +
                         "id integer not null primary key autoincrement," +
                         ");");
             }
@@ -70,7 +71,9 @@ public class Dao {
                 state.executeUpdate("create table people\n" +
                         "(\n" +
                         "\tFOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE\n" +
+                        "\tFOREIGN KEY (descendant_id) REFERENCES people(id) ON DELETE CASCADE\n" +
                         "\tid integer not null primary key autoincrement,\n" +
+                        "\tdescendant_id integer not null\n" +
                         "\tuser_id integer not null\n" +
                         "\tfirstName varchar(255) not null,\n" +
                         "\tlastName varchar(255) not null,\n" +

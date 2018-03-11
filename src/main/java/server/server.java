@@ -12,7 +12,7 @@ import java.net.InetSocketAddress;
 import handler.*;
 
 
-    public class Server
+    public class server
     {
 
         private static final int MAX_WAITING_CONNECTIONS = 12;
@@ -20,7 +20,7 @@ import handler.*;
         public static void main(String[] args)
         {
             String portNumber = args[0];
-            new Server().run(portNumber);
+            new server().run(portNumber);
         }
 
         private void run(String portNumber)

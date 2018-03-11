@@ -18,7 +18,7 @@ public class auth_token extends Model {
      *
      * @param token Token to store
      */
-    public auth_token(String token, String user_id){this.token = token; this.user_id = user_id;}
+    public auth_token(String token, String user_id){this.id = token; this.user_id = user_id;}
 
     public String getData(){
         return new String("user_id = " + user_id);

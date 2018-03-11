@@ -7,6 +7,7 @@ package model;
 public class Person extends Model  {
     private String id;
     private String user_id;
+    private String descendant_id;
     private String firstName;
     private String lastName;
     private String gender;
@@ -26,6 +27,8 @@ public class Person extends Model  {
         this.spouse = spouse;
     }
 
+    public Person(User descendant){}
+
     /**
      *
      * @param data String array with all data for a new person
@@ -42,8 +45,16 @@ public class Person extends Model  {
         return id;
     }
 
-    public String getDescendant() {
+    public String getUser_id() {
         return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
+    public String getDescendant() {
+        return descendant_id;
     }
 
     public String getFirstName() {
@@ -69,6 +80,7 @@ public class Person extends Model  {
     public String getSpouse() {
         return spouse;
     }
+
 
 
 }

@@ -5,7 +5,14 @@ package model;
  */
 
 public class Model {
-    private String message;
+    protected String message;
+
+    public Model(){
+        message = null;
+    }
+    public Model(String message){
+        this.message = message;
+    }
 
     public String getMessage() {
         return message;
