@@ -16,7 +16,7 @@ import model.events;
 
 public class eventService extends Service {
 
-    public static Object serve(String auth_token, String id){
+    public static Model serve(String auth_token, String id){
         auth_tokenDao authDao = new auth_tokenDao();
         auth_token token =null;
         try{

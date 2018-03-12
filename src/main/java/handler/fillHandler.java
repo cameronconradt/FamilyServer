@@ -38,7 +38,7 @@ public class fillHandler extends Handler {
             throw new InvalidPathException(path.toString(),"Invalid Path" );
         }
 
-        Model response = fillService.fill(userName,generations);
+        Model response = fillService.serve(userName,generations);
 
         ex.sendResponseHeaders(HttpURLConnection.HTTP_OK,0);
 

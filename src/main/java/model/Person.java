@@ -22,18 +22,47 @@ public class Person extends Model  {
      * @param data [id,descendant_id,user_id,firstName,lastName,gender,father,mother,spouse]
      */
     public Person(Object[] data){
+        if(data.length == 5){
+            descendant_id = (String) data[0];
+            user_id = (String) data[1];
+            firstName = (String) data[2];
+            lastName = (String) data[3];
+            gender = (String) data[4];
 
+        }
+        else if(data.length == 6) {
+            id= (String) data[0];
+            descendant_id = (String) data[1];
+            user_id = (String) data[2];
+            firstName = (String) data[3];
+            lastName = (String) data[4];
+            gender = (String) data[5];
+        }
+        else if(data.length == 8){
+            descendant_id = (String) data[0];
+            user_id = (String) data[1];
+            firstName = (String) data[2];
+            lastName = (String) data[3];
+            gender = (String) data[4];
+            father = (String) data[5];
+            mother = (String) data[6];
+            spouse = (String) data[7];
+        }
+        else if(data.length == 9){
+            id= (String) data[0];
+            descendant_id = (String) data[1];
+            user_id = (String) data[2];
+            firstName = (String) data[3];
+            lastName = (String) data[4];
+            gender = (String) data[5];
+            father = (String) data[6];
+            mother = (String) data[7];
+            spouse = (String) data[8];
+        }
+        else throw new IllegalArgumentException();
     }
 
     public Person(User descendant){}
-
-    /**
-     *
-     * @param data String array with all data for a new person
-     *             [id, firstName, lastName, gender]
-     * @param descendant User that owns this person
-     */
-    public Person(String[] data, User descendant){}
 
     public String getData(){
         return new String("user_id = " + user_id + ", firstName = " + firstName + ", lastName = " + lastName + ", gender = " + gender + ", father = " + father + ", mother = " + mother + ", spouse = " + spouse);

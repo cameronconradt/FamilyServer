@@ -20,7 +20,7 @@ public class personService extends Service {
         auth_tokenDao aDao = new auth_tokenDao();
         auth_token token = null;
         try{
-            token = aDao.getWithId(authToken);
+            token = aDao.getWithTokenId(authToken);
         }
         catch(SQLException e){
             return new Model("Invalid auth_token");
@@ -43,14 +43,14 @@ public class personService extends Service {
             return person;
         }
         else{
-            ArrayList<Person> people = null;
+            people people = null;
             try{
                 people = pDao.getAllPersons(token.getUserId());
             }
             catch(SQLException e){
                 return new Model("Could not retrieve people");
             }
-            return new people(people.toArray());
+            return people;
         }
     }
 }

@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 
+import model.Model;
 import model.User;
 import model.loginResponse;
 import service.registerService;
@@ -25,7 +26,7 @@ public class  registerHandler extends Handler {
         User user = gson.fromJson(in,User.class);
         in.close();
 
-        loginResponse response = registerService.serve(user);
+        Model response = registerService.serve(user);
 
         ex.sendResponseHeaders(HttpURLConnection.HTTP_OK,0);
 

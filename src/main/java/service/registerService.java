@@ -16,7 +16,7 @@ import model.loginResponse;
 public class registerService extends Service {
 
 
-    public static Model register(User user){
+    public static Model serve(User user){
         auth_tokenDao auth_tokenDao = new auth_tokenDao();
         if(user == null)
             return new Model("User blank");
@@ -28,7 +28,9 @@ public class registerService extends Service {
         catch(SQLException e){
             return new Model("Username already exists");
         }
-
+        if(find != null){
+            return new Model("Username already exists");
+        }
         try{
             uDao.addUser(user);
             auth_tokenDao.createAuth_Token(user.getId());

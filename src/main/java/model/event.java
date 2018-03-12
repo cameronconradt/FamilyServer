@@ -26,7 +26,31 @@ public class event extends Model  {
      *
      * @param data string array [id(do not set),user_id,date,type,country,city,latitude,longitude,person_id]
      */
-    public event(Object[] data){}
+    public event(Object[] data){
+        if(data.length == 8){
+            user_id = (String) data[0];
+            date = (String) data[1];
+            type = (String) data[2];
+            country = (String) data[3];
+            city = (String) data[4];
+            latitude = (Double) data[5];
+            longitude = (Double) data[6];
+            person_id = (String) data[7];
+        }
+        else if(data.length == 9){
+            id = (String) data[0];
+            user_id = (String) data[1];
+            date = (String) data[2];
+            type = (String) data[3];
+            country = (String) data[4];
+            city = (String) data[5];
+            latitude = (Double) data[6];
+            longitude = (Double) data[7];
+            person_id = (String) data[8];
+        }
+        else
+            throw new IllegalArgumentException();
+    }
 
     public event(User user) {}
 

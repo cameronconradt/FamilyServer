@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
 import dao.eventDao;
+import model.Model;
 import model.event;
 import model.events;
 import service.eventService;
@@ -21,12 +22,9 @@ import service.eventService;
 
 public class eventHandler extends Handler {
 
-    static int count = 0;
 
     @Override
     public void handle(HttpExchange ex) throws IOException {
-        System.out.println("event handle" + count);
-        count++;
 
         try{
             switch (ex.getRequestMethod().toLowerCase()) {
@@ -40,60 +38,33 @@ public class eventHandler extends Handler {
                     System.out.println("unidentified");
                     break;
             }
-            OutputStream responseBody = ex.getResponseBody();
-            OutputStreamWriter outBody = new OutputStreamWriter(responseBody);
 
             String uri = ex.getRequestURI().toString();
 
             System.out.println(uri);
 
             String[] path = uri.split("/");
+            String auth_token = ex.getRequestHeaders().get("Authorization").get(0);
 
-            boolean good_path = true;
-            String json = new String();
+            Gson gson = new Gson();
+            String id = null;
 
-            if (path.length != 2 || path.length != 3) {
-                good_path = false;
-            }
-            else {
-                if (path[path.length - 1].equals("event")) {
-                    System.out.println("all events");
-                } else if (path[path.length - 2].equals("event")) {
-                    System.out.println("one event with id" + path[path.length-1]);
-                }else{
-                        good_path = false;
+            if (!(path.length < 2 || path.length > 3)) {
+                if (path[path.length - 2].equals("event")) {
+                    id = path[path.length-1];
+                }
+                else{
                         System.out.println("unidentified");
-                    }
                 }
-
-            if(good_path){
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-                String auth_token = ex.getRequestHeaders().get("Authorization").get(0);
-
-                System.out.println("auth_token: " + auth_token);
-
-                if(path[path.length-1].equals("event")){
-                    events allEvents = new eventService().all(auth_token);
-
-                    json = gson.toJson(allEvents);
-                }
-                else if(path[path.length-2].equals("event")){
-                    System.out.println("event id= " + path[path.length-1]);
-
-                    event singleEvent = new eventService().one(path[path.length-1]);
-
-                    json = gson.toJson(singleEvent);
-                }
-
-                ex.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
             }
-            else{
-                ex.sendResponseHeaders(HttpURLConnection.HTTP_INTERNAL_ERROR,0);
-            }
-            outBody.write(json);
-            outBody.close();
-            responseBody.close();
+
+                Model event = eventService.serve(auth_token,id);
+
+            ex.sendResponseHeaders(HttpURLConnection.HTTP_OK,0);
+
+            OutputStreamWriter output = new OutputStreamWriter(ex.getResponseBody());
+            gson.toJson(event,output);
+            output.close();
 
         }
         catch(IOException e){

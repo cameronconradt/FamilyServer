@@ -28,7 +28,7 @@ public class loginService extends Service {
         auth_token token = null;
 
         try{
-            user = userDao.getUserByName(request.username);
+            user = userDao.getUser(request.username);
             token = authDao.getWithName(request.username);
         }
         catch(SQLException e){

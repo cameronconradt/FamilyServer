@@ -1,15 +1,12 @@
 package dao;
 
-import java.net.ConnectException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 import model.User;
-import sun.swing.SwingLazyValue;
 
 /**
  * Created by camer on 2/16/2018.
