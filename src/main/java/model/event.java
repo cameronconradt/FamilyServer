@@ -28,10 +28,9 @@ public class event extends Model  {
     }
     /**
      *
-     * @param data string array [date, type, country, city, person_id,user_id]
-     * @param location double array [latitude, longitude]
+     * @param data string array [id(do not set),user_id,date,type,country,city,latitude,longitude,person_id]
      */
-    public event(String[] data, double[] location, String id){}
+    public event(Object[] data){}
 
     public event(User user) {}
 

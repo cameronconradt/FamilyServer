@@ -1,22 +1,26 @@
 package model;
 
+import java.util.ArrayList;
+
 /**
  * Created by camer on 3/10/2018.
  */
 
 public class people extends Model {
+    private ArrayList<Person> people = new ArrayList<>();
+
+    public people(){}
+
     public Person[] getPeople() {
-        return people;
+        return (Person[]) people.toArray();
     }
 
-    public void setPeople(Person[] people) {
+    public void setPeople(ArrayList<Person> people) {
         this.people = people;
     }
 
-    private Person[] people;
+    public void addPerson(Person person){
+        people.add(person);
 
-    public people(Object[] people){
-        if(people.getClass().equals(Person.class))
-            this.people = (Person[]) people;
     }
 }

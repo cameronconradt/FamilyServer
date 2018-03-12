@@ -13,16 +13,7 @@ import model.User;
  */
 
 public class userDao extends Dao {
-    ArrayList<User> users = new ArrayList<>();
-    /**
-     * Adds a new person to the database
-     * @param data array of Strings to be loaded into a new user.
-     *             [username, password, email, firstName, lastName, gender, id]
-     */
-    public void newUser(String[] data){
-        users.add(new User(data));
-        //TODO: sql newUser
-    }
+
 
     /**
      *

@@ -27,6 +27,14 @@ public class Person extends Model  {
         this.spouse = spouse;
     }
 
+    /**
+     *
+     * @param data [id,descendant_id,user_id,firstName,lastName,gender,father,mother,spouse]
+     */
+    public Person(Object[] data){
+
+    }
+
     public Person(User descendant){}
 
     /**
@@ -81,6 +89,27 @@ public class Person extends Model  {
         return spouse;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
+    public String getDescendant_id() {
+        return descendant_id;
+    }
 
+    public void setDescendant_id(String descendant_id) {
+        this.descendant_id = descendant_id;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 }

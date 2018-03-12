@@ -71,6 +71,15 @@ public class fillService extends Service {
         for(Person person: people){
             personDao.addPerson(person);
         }
+        for(event event : events){
+            try {
+                eventDao.addEvent(event);
+            }
+            catch(SQLException e){
+                System.err.println("Event not added");
+                e.printStackTrace();
+            }
+        }
         return new Model("You filled " + user.getUsername() + " with " + generations + " generations");
     }
     private static ArrayList<Person> generatePeopleRecur(User user,int generations){

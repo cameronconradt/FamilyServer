@@ -66,6 +66,7 @@ public class Dao {
                 System.out.println("Could not create table users" + e.getMessage());
                 return;
             }
+            //create people table
             try{
                 state.executeUpdate("drop table if exists people;");
                 state.executeUpdate("create table people\n" +
@@ -87,6 +88,7 @@ public class Dao {
                 System.out.println("Could not create table people" + e.getMessage());
                 return;
             }
+            //create auth_tokens table
             try{
                 state.executeUpdate("drop table if exists auth_tokens;");
                 state.executeUpdate("create table auth_tokens\n" +
@@ -100,6 +102,7 @@ public class Dao {
                 System.out.println("Could not create table auth_tokens" + e.getMessage());
                 return;
             }
+            //create Events table
             try{
                 state.executeUpdate("drop table if exists events");
                 state.executeUpdate("create table events\n" +
@@ -113,6 +116,8 @@ public class Dao {
                         "\tid integer not null primary key autoincrement,\n" +
                         "\tlatitude double not null,\n" +
                         "\tlongitude double not null\n" +
+                        "person_id integer not null," +
+                        "FOREIGN KEY (person_id) REFERENCES people(id) ON DELETE CASCADE" +
                         ");");
             }
             catch (SQLException e){

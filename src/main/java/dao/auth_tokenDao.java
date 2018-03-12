@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import model.User;
 import model.auth_token;
 
 /**
@@ -19,11 +20,28 @@ public class auth_tokenDao extends Dao {
      *
      * @param id ID of auth_token to remove
      */
-    public void removeAuth_Token(String id){}
+    public void removeAuth_Token(String id) throws SQLException{
+        Connection connect = Dao.connect();
+        if(connect == null){
+            throw new NullPointerException();
+        }
+
+        Statement state = connect.createStatement();
+        state.executeUpdate("delete from auth_tokens where id=\"" + id + "\";");
+
+        try{
+            connect.close();
+        }
+        catch(SQLException e){
+            System.err.println("Couldn't close connection");
+            e.printStackTrace();
+        }
+
+    }
 
     /**
      * Creates a new unique auth token
-     *@param id ID of person to attach auth_token to
+     *@param id ID of user to attach auth_token to
      */
     public void createAuth_Token(String id, String token){
         auth_token tempToken = new auth_token(token, id);
@@ -33,7 +51,6 @@ public class auth_tokenDao extends Dao {
         }
         try {
         PreparedStatement prep = connection.prepareStatement("insert into auth_tokens values(?, ?);");
-//		userName TEXT, password TEXT, authCode TEXT, userId INTEGER
 
         prep.setString(1, tempToken.getId());
         prep.setString(2, tempToken.getUserId());
@@ -62,7 +79,7 @@ public class auth_tokenDao extends Dao {
         }
     }
 
-    public auth_token getWithId(String id) throws SQLException{
+    public auth_token getWithTokenId(String id) throws SQLException{
         Connection connection = connect();
         if(connection == null) {
             throw new NullPointerException();
@@ -91,7 +108,63 @@ public class auth_tokenDao extends Dao {
         return token;
     }
 
-    public auth_token getWithName(String username){
+    public auth_token getWithUserId(String id) throws SQLException{
+        Connection connection = connect();
+        if(connection == null) {
+            throw new NullPointerException();
+        }
+        Statement statement;
+        ResultSet rs = null;
+        auth_token token = null;
+        try {
+            statement = connection.createStatement();
+            rs = statement.executeQuery("select * from auth_tokens where user_id=\""+ id + "\";");
 
+        } catch (SQLException e) {
+            System.err.println("The attempt to get the user info failed!");
+            e.printStackTrace();
+        }
+
+        token = new auth_token(rs.getString(1),rs.getString(2));
+
+        try{
+            connection.close();
+        }
+        catch(SQLException e){
+            System.err.print("Couldn't close connection");
+            e.printStackTrace();
+        }
+        return token;
+    }
+
+    public auth_token getWithName(String username)throws SQLException{
+        Connection connection = connect();
+        if(connection == null) {
+            throw new NullPointerException();
+        }
+        Statement statement;
+        ResultSet rs = null;
+        auth_token token = null;
+        User user = null;
+        user = userDao.getUser(username);
+        try {
+            statement = connection.createStatement();
+            rs = statement.executeQuery("select * from auth_tokens where user_id=\""+ user.getId() + "\";");
+
+        } catch (SQLException e) {
+            System.err.println("The attempt to get the user info failed!");
+            e.printStackTrace();
+        }
+
+        token = new auth_token(rs.getString(1),rs.getString(2));
+
+        try{
+            connection.close();
+        }
+        catch(SQLException e){
+            System.err.print("Couldn't close connection");
+            e.printStackTrace();
+        }
+        return token;
     }
 }
