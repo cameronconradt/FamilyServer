@@ -3,6 +3,7 @@ package service;
 import java.sql.SQLException;
 
 import dao.Dao;
+import dao.auth_tokenDao;
 import dao.eventDao;
 import dao.personDao;
 import dao.userDao;
@@ -20,6 +21,10 @@ public class loadService extends Service {
 
 
     public static Model serve(loadRequest request){
+        userDao userDao = new userDao();
+        personDao personDao = new personDao();
+        eventDao eventDao = new eventDao();
+        auth_tokenDao auth_tokenDao = new auth_tokenDao();
         if(request == null){
             return new Model("Request body was null");
         }
@@ -61,7 +66,7 @@ public class loadService extends Service {
             System.err.println(e.getMessage());
         }
         try{
-            registerService.addAuth_Tokens(users);
+            auth_tokenDao.addTokens(users);
         } catch(SQLException e){
             e.printStackTrace();
             return new Model("Could not add Tokens: " + e.getMessage());

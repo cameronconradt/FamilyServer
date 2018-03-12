@@ -15,7 +15,6 @@ import model.auth_token;
  */
 
 public class auth_tokenDao extends Dao {
-    ArrayList<auth_token> tokens = new ArrayList<>();
     /**
      *
      * @param id ID of auth_token to remove
@@ -39,45 +38,52 @@ public class auth_tokenDao extends Dao {
 
     }
 
+    public String addTokens(User[] users)throws SQLException{
+        Connection connect = connect();
+        if(connect == null) {
+            throw new NullPointerException();
+        }
+        PreparedStatement state = connect.prepareStatement("insert into auth_tokens values(?,?);");
+
+        for(User user : users){
+            if(user.isValid()) {
+                state.setString(2, user.getId());
+                state.addBatch();
+            }
+        }
+
+        return "tokens added to users";
+    }
+
     /**
      * Creates a new unique auth token
-     *@param id ID of user to attach auth_token to
+     *@param user_id ID of user to attach auth_token to
      */
-    public void createAuth_Token(String id, String token){
-        auth_token tempToken = new auth_token(token, id);
+    public void createAuth_Token(String user_id) throws SQLException{
         Connection connection = connect();
         if(connection == null) {
             throw new NullPointerException();
         }
-        try {
+
         PreparedStatement prep = connection.prepareStatement("insert into auth_tokens values(?, ?);");
 
-        prep.setString(1, tempToken.getId());
-        prep.setString(2, tempToken.getUserId());
+        prep.setString(2, user_id);
         prep.addBatch();
 
         connection.setAutoCommit(false);
         prep.executeBatch();
         connection.setAutoCommit(true);
+        try {
         connection.close();
         } catch (SQLException e) {
             System.err.println("Couldn't close the connection!");
             e.printStackTrace();
         }
 
-        tokens.add(tempToken);
+
     }
 
-    public static void replaceModel(auth_token model){
-        try {
-            sqlCommand("update auth_tokens set " + model.getData() + " where id='" + model.getId() + "'");
-            //update users set *** data *** where id='user_id'
-            System.out.println("Successfully replaced auth_token");
-        }
-        catch(SQLException e){
-            System.out.println("Could not update auth_token " + e.getMessage());
-        }
-    }
+
 
     public auth_token getWithTokenId(String id) throws SQLException{
         Connection connection = connect();
@@ -138,6 +144,7 @@ public class auth_tokenDao extends Dao {
     }
 
     public auth_token getWithName(String username)throws SQLException{
+        userDao userDao = new userDao();
         Connection connection = connect();
         if(connection == null) {
             throw new NullPointerException();
@@ -146,8 +153,9 @@ public class auth_tokenDao extends Dao {
         ResultSet rs = null;
         auth_token token = null;
         User user = null;
-        user = userDao.getUser(username);
+
         try {
+            user = userDao.getUser(username);
             statement = connection.createStatement();
             rs = statement.executeQuery("select * from auth_tokens where user_id=\""+ user.getId() + "\";");
 

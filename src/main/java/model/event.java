@@ -1,5 +1,7 @@
 package model;
 
+import java.lang.reflect.Field;
+
 /**
  * Created by camer on 2/16/2018.
  */
@@ -16,15 +18,9 @@ public class event extends Model  {
     private String user_id;
 
 
-    public String getUser_id() {return user_id;}
-    public void setUser_id(String id){user_id = id;}
-    public String getPerson_id() {
-        return person_id;
-    }
-    public void setPerson_id(String id){person_id = id;}
+
     public String getData(){
         return new String("date = " + date + ", type = " + type + ", latitude = " + Double.toString(latitude) + ", longitude = " + Double.toString(longitude) + ", country = " + country + ", city = " + city + ", person_id = " + person_id);
-
     }
     /**
      *
@@ -35,6 +31,25 @@ public class event extends Model  {
     public event(User user) {}
 
     public event(String id) {}
+
+    public boolean isValid(){
+        for (Field f: getClass().getDeclaredFields())
+        {
+            try {
+                if (f != getClass().getDeclaredField("id")) {
+                    if(f.get(this) == null || f.get(this).equals(""))
+                        return false;
+                }
+            }
+            catch(NoSuchFieldException e){
+                System.err.println("event.isvalid should never happen");
+            }
+            catch (IllegalAccessException e){
+                System.err.println("event.isvalid should never happen");
+            }
+        }
+        return true;
+    }
 
     public double getLatitude() {
         return latitude;
@@ -89,6 +104,12 @@ public class event extends Model  {
     public void setId(String id) {
         this.id = id;
     }
+    public String getUser_id() {return user_id;}
+    public void setUser_id(String id){user_id = id;}
+    public String getPerson_id() {
+        return person_id;
+    }
+    public void setPerson_id(String id){person_id = id;}
 
 
 }

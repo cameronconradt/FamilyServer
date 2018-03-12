@@ -20,7 +20,7 @@ public class eventService extends Service {
         auth_tokenDao authDao = new auth_tokenDao();
         auth_token token =null;
         try{
-            token = authDao.getWithId(auth_token);
+            token = authDao.getWithTokenId(auth_token);
         }
         catch(SQLException e){
             return new Model("Incorrect auth_code");

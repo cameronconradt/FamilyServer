@@ -35,14 +35,14 @@ public class fillService extends Service {
         User user = null;
         Person userP = null;
         try{
-            user = userDao.getUserByName(username);
+            user = userDao.getUser(username);
         }
         catch(SQLException e){
             e.printStackTrace();
             return new Model("Couldn't find the username " + username);
         }
         try{
-            personDao.deletePerson(user.getPersonid());
+            personDao.removePerson(user.getPersonid());
         }
         catch(SQLException e){
             e.printStackTrace();
@@ -54,7 +54,15 @@ public class fillService extends Service {
     }
     public static Model generateFamily(User user, int generations){
         personDao personDao = new personDao();
-        user = personDao.addUser(user);
+        userDao userDao = new userDao();
+        try {
+            personDao.addUser(user);
+            user = userDao.getUser(user.getUsername());
+        }
+        catch(SQLException e){
+            System.err.println("User not added");
+            e.printStackTrace();
+        }
         ArrayList<Person> people =  generatePeopleRecur(user,generations);
         ArrayList<event> events = generateEventsRecur(user, generations);
 
@@ -69,7 +77,13 @@ public class fillService extends Service {
         people = generateParents(people);
 
         for(Person person: people){
-            personDao.addPerson(person);
+            try {
+                personDao.addPerson(person);
+            }
+            catch (SQLException e){
+                System.err.println("Person could not be added");
+                e.printStackTrace();
+            }
         }
         for(event event : events){
             try {

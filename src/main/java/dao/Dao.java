@@ -127,51 +127,7 @@ public class Dao {
 
         }
 
-        public static void sqlCommand(String command) throws SQLException{
-            Connection connection = connect();
-            if(connection == null){
-                throw new NullPointerException();
-            }
-            Statement state = connection.createStatement();
-            state.executeUpdate(command);
-        }
 
-        public static ResultSet sqlQuery(String query) throws SQLException{
-            Connection connection = connect();
-            if(connection == null){
-                throw new NullPointerException();
-            }
-            Statement state = connection.createStatement();
-            return state.executeQuery(query);
-        }
 
-        public static ArrayList<Model> convertToModels(String toConvert){
-            ArrayList<Model> models = new ArrayList<>();
-            Map<String, ArrayList<String>> data = new HashMap<>();
-            Scanner scanner = new Scanner(toConvert);
-            String table = new String();
-            if(scanner.hasNext()) {
-                table = scanner.next();
-                scanner.next();
-            }
-            String temp = new String();
-            String name = new String();
-            while(scanner.hasNext()){
-                if(temp.equals(":")){
-                    if(scanner.hasNext()){
-                        name = scanner.next();
-                        scanner.next();
-                        scanner.next();
-                    }
-                    while (!temp.equals(":") && scanner.hasNext()){
-                        data.get(name).add(temp);
-                        temp = scanner.next();
-                    }
-                }
-            }
-            if(data.get("password")!= null) {
-                String[] userData = data.get("password").toArray(new String[data.get("password").size()]);
-                User tempusr = new User(userData);
-            }
-        }
+
 }

@@ -1,5 +1,6 @@
 package model;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
@@ -87,7 +88,50 @@ public class User extends Model  {
     /**
      *
      * @param data array of Strings to be loaded into a new user.
-     *             [username, password, email, firstName, lastName, gender, id]
+     *             [username, password, email, firstName, lastName, gender, personid, id]
      */
-    public User(String[] data){}
+    public User(String[] data){
+        if(data.length == 7){
+            username = data[0];
+            password = data[1];
+            email = data[2];
+            firstName = data[3];
+            lastName = data[4];
+            gender = data[5];
+            personid = data[6];
+        }
+        else if(data.length == 8){
+            username = data[0];
+            password = data[1];
+            email = data[2];
+            firstName = data[3];
+            lastName = data[4];
+            gender = data[5];
+            personid = data[6];
+            id= data[7];
+        }
+        else
+            throw new IllegalArgumentException();
+    }
+
+    public boolean isValid(){
+        for (Field f: getClass().getDeclaredFields())
+        {
+            try {
+                if (f != getClass().getDeclaredField("id")) {
+                    if(f.get(this) == null || f.get(this).equals(""))
+                        return false;
+                }
+            }
+            catch(NoSuchFieldException e){
+                System.err.println("user.isvalid should never happen");
+            }
+            catch (IllegalAccessException e){
+                System.err.println("user.isvalid should never happen");
+            }
+        }
+        return true;
+    }
+
+
 }

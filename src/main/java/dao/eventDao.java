@@ -53,6 +53,18 @@ public class eventDao extends Dao {
         return "Event added to table";
     }
 
+    public String addEvents(event[] events) throws SQLException{
+        for(event event : events){
+            try{
+                addEvent(event);
+            }
+            catch (SQLException e){
+                System.err.println("Event not added " + event.getData());
+            }
+        }
+        return "Events added";
+    }
+
     /**
      *
      * @param id unique id to remove
@@ -156,15 +168,6 @@ public class eventDao extends Dao {
         return toReturn;
        }
 
-    public static void replaceModel(event model){
-        try {
-            sqlCommand("update events set " + model.getData() + " where id='" + model.getId() + "'");
-            //update events set *** data *** where id='event_id'
-            System.out.println("Successfully replaced Event");
-        }
-        catch(SQLException e){
-            System.out.println("Could not replaced Event " + e.getMessage());
-        }
-    }
+
 
 }

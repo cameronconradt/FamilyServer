@@ -98,6 +98,19 @@ public class personDao extends Dao {
         }
         return "Person added to table";
     }
+
+    public String addPeople(Person[] people) throws SQLException{
+        for(Person person : people){
+            try{
+                addPerson(person);
+            }
+            catch (SQLException e){
+                System.err.println("Person not added " + person.getFirstName());
+            }
+        }
+        return "People added";
+    }
+
     /**
      * Removes specific person
      * @param id id of person to remove
@@ -194,14 +207,5 @@ public class personDao extends Dao {
 
     }
 
-    public static void replaceModel(Person model){
-        try {
-            sqlCommand("update people set " + model.getData() + " where id='" + model.getId() + "'");
-            System.out.println("Successfully replaced Person");
-            //update users set *** data *** where id='user_id'
-        }
-        catch(SQLException e){
-            System.out.println("Could not replace Person " + e.getMessage());
-        }
-    }
+
 }

@@ -17,12 +17,13 @@ public class registerService extends Service {
 
 
     public static Model register(User user){
+        auth_tokenDao auth_tokenDao = new auth_tokenDao();
         if(user == null)
             return new Model("User blank");
         User find = null;
         userDao uDao = new userDao();
         try{
-            find = uDao.getUserByName(user.getUsername());
+            find = uDao.getUser(user.getUsername());
         }
         catch(SQLException e){
             return new Model("Username already exists");
@@ -30,6 +31,7 @@ public class registerService extends Service {
 
         try{
             uDao.addUser(user);
+            auth_tokenDao.createAuth_Token(user.getId());
         }
         catch(SQLException e){
             return new Model("Could not add the user");
@@ -39,7 +41,7 @@ public class registerService extends Service {
         auth_token token = null;
         auth_tokenDao aDao = new auth_tokenDao();
         try{
-            find = uDao.getUserByName(user.getUsername());
+            find = uDao.getUser(user.getUsername());
             token = aDao.getWithName(user.getUsername());
         }
         catch(SQLException e){

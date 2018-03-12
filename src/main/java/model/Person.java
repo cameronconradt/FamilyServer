@@ -1,5 +1,7 @@
 package model;
 
+import java.lang.reflect.Field;
+
 /**
  * Created by camer on 2/16/2018.
  */
@@ -14,18 +16,6 @@ public class Person extends Model  {
     private String father;
     private String mother;
     private String spouse;
-
-    public void setFather(String father) {
-        this.father = father;
-    }
-
-    public void setMother(String mother) {
-        this.mother = mother;
-    }
-
-    public void setSpouse(String spouse) {
-        this.spouse = spouse;
-    }
 
     /**
      *
@@ -47,6 +37,27 @@ public class Person extends Model  {
 
     public String getData(){
         return new String("user_id = " + user_id + ", firstName = " + firstName + ", lastName = " + lastName + ", gender = " + gender + ", father = " + father + ", mother = " + mother + ", spouse = " + spouse);
+    }
+
+    public boolean isValid(){
+        for (Field f: getClass().getDeclaredFields())
+        {
+            try {
+                if (f != getClass().getDeclaredField("id") || f != getClass().getDeclaredField("father")
+                        || f != getClass().getDeclaredField("mother")
+                        || f != getClass().getDeclaredField("spouse")) {
+                    if(f.get(this) == null || f.get(this).equals(""))
+                        return false;
+                }
+            }
+            catch(NoSuchFieldException e){
+                System.err.println("user.isvalid should never happen");
+            }
+            catch (IllegalAccessException e){
+                System.err.println("user.isvalid should never happen");
+            }
+        }
+        return true;
     }
 
     public String getId() {
@@ -89,9 +100,7 @@ public class Person extends Model  {
         return spouse;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public void setId(String id) {  this.id = id;  }
 
     public String getDescendant_id() {
         return descendant_id;
@@ -111,5 +120,17 @@ public class Person extends Model  {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public void setFather(String father) {
+        this.father = father;
+    }
+
+    public void setMother(String mother) {
+        this.mother = mother;
+    }
+
+    public void setSpouse(String spouse) {
+        this.spouse = spouse;
     }
 }
