@@ -2,6 +2,8 @@ package model;
 
 import java.lang.reflect.Field;
 
+import generator.generator;
+
 /**
  * Created by camer on 2/16/2018.
  */
@@ -52,9 +54,7 @@ public class event extends Model  {
             throw new IllegalArgumentException();
     }
 
-    public event(User user) {}
 
-    public event(String id) {}
 
     public boolean isValid(){
         for (Field f: getClass().getDeclaredFields())

@@ -62,7 +62,14 @@ public class Person extends Model  {
         else throw new IllegalArgumentException();
     }
 
-    public Person(User descendant){}
+    public Person(User descendant, String gender){}
+
+    public Person(User user){
+        user_id=user.getId();
+        firstName= user.getFirstName();
+        lastName = user.getLastName();
+        gender = user.getGender();
+    }
 
     public String getData(){
         return new String("user_id = " + user_id + ", firstName = " + firstName + ", lastName = " + lastName + ", gender = " + gender + ", father = " + father + ", mother = " + mother + ", spouse = " + spouse);

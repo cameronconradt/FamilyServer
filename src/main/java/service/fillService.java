@@ -10,6 +10,7 @@ import model.Model;
 import model.Person;
 import model.User;
 import model.event;
+import generator.generator;
 
 /**
  * Created by camer on 2/16/2018.
@@ -53,6 +54,7 @@ public class fillService extends Service {
 
     }
     public static Model generateFamily(User user, int generations){
+        generator generator = new generator();
         personDao personDao = new personDao();
         userDao userDao = new userDao();
         try {
@@ -63,7 +65,10 @@ public class fillService extends Service {
             System.err.println("User not added");
             e.printStackTrace();
         }
-        ArrayList<Person> people =  generatePeopleRecur(user,generations);
+
+        generator.generateAll(user,generations);
+
+        /*ArrayList<Person> people =  generatePeopleRecur(user,generations);
         ArrayList<event> events = generateEventsRecur(user, generations);
 
         int eventpos = 0;
@@ -93,9 +98,9 @@ public class fillService extends Service {
                 System.err.println("Event not added");
                 e.printStackTrace();
             }
-        }
+        }*/
         return new Model("You filled " + user.getUsername() + " with " + generations + " generations");
-    }
+    }/*
     private static ArrayList<Person> generatePeopleRecur(User user,int generations){
         if(generations == 0){
             return new ArrayList<Person>();
@@ -130,5 +135,5 @@ public class fillService extends Service {
         parentList.remove(0);
         toreturn.addAll(generateParents(parentList));
         return toreturn;
-    }
+    }*/
 }
