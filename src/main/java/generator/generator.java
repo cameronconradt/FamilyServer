@@ -35,7 +35,7 @@ public class generator {
         return (Model[]) generatePeople(descendant,1).toArray();
     }
 
-    public String generateEvents(Person person, int generation){
+    private String generateEvents(Person person, int generation){
         if(generation >= totgenerations)
             return null;
         ArrayList<event> toreturn = new ArrayList<>();
@@ -68,7 +68,7 @@ public class generator {
 
     }
 
-    public ArrayList<Model> generatePeople(User descendant, int generation){
+    private ArrayList<Model> generatePeople(User descendant, int generation){
         if(generation >= totgenerations)
             return null;
         ArrayList<Model> husbandParents = generatePeople(descendant,generation+1);
